@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>BLE Device List</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <button ion-item *ngFor="let device of devices" (click)="connect($event, device)">
+      <ion-icon name="bluetooth" item-left></ion-icon>
+      {{device.name}}
+      <div item-right>{{device.id}}</div>
+    </button>
+  </ion-list>
+</ion-content>

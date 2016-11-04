@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
-import { MyApp } from './app.component';
-import { BLEListPage } from '../pages/ble-list/ble-list';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
+
+import { MyApp } from './app.component';
+
+import { BLEListPage } from '../pages/ble-list/ble-list';
+import { BatteryStatePage } from '../pages/battery-state/battery-state';
 
 const cloudSettings: CloudSettings = {
   core: {
@@ -14,6 +17,7 @@ const cloudSettings: CloudSettings = {
   declarations: [
     MyApp,
     BLEListPage,
+    BatteryStatePage,
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -23,6 +27,7 @@ const cloudSettings: CloudSettings = {
   entryComponents: [
     MyApp,
     BLEListPage,
+    BatteryStatePage,
   ],
   providers: []
 })

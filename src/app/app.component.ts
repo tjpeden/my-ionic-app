@@ -1,13 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-
 import { Deploy } from '@ionic/cloud-angular';
-
 import { Platform, MenuController, Nav } from 'ionic-angular';
-
 import { StatusBar } from 'ionic-native';
 
 import { BLEListPage } from '../pages/ble-list/ble-list';
-
 
 @Component({
   templateUrl: 'app.html'

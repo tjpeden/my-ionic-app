@@ -30,7 +30,7 @@ export class MyApp {
     this.pages = [
       { title: 'BLE Devices', component: BLEListPage },
     ];
-    
+
     this.deploy.channel = 'dev';
   }
 
@@ -39,6 +39,16 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
+
+      this.deploy.check().then((snapshotAvailable: boolean) => {
+        if(snapshotAvailable) {
+          this.deploy.download().then(() => {
+            return this.deploy.extract();
+          }).then(() => {
+            this.deploy.load();
+          });
+        }
+      });
     });
   }
 

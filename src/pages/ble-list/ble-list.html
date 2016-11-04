@@ -3,13 +3,13 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>BLE Device List</ion-title>
+    <ion-title>BLE Devices</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
-    <ion-item-header>Devices</ion-item-header>
+    <ion-list-header>Devices</ion-list-header>
     <ion-item *ngFor="let device of devices" (click)="connect($event, device)">
       <ion-icon name="bluetooth" item-left></ion-icon>
       <h2>{{device.name}}</h2>

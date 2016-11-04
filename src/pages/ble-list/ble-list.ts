@@ -1,67 +1,77 @@
 import { Component } from '@angular/core';
 import {
   NavController,
-  NavParams,
   LoadingController,
-  PopoverController,
+  ModalController,
+  ToastController,
 } from 'ionic-angular';
-import { Toast, BLE } from 'ionic-native';
+import { BLE } from 'ionic-native';
+
+import { Device } from '../../app/device';
 
 import { BatteryStatePage } from '../battery-state/battery-state';
-
-interface IDevice {
-  name: string;
-  id: string;
-  advertising: Array<number>;
-  rssi: number;
-}
 
 @Component({
   templateUrl: 'ble-list.html',
 })
 export class BLEListPage {
-  devices: Array<IDevice>;
+  devices: Array<Device>;
 
   constructor(
-    public navController: NavController,
-    public navParams: NavParams,
+    public nav: NavController,
+    public toast: ToastController,
     public loadingController: LoadingController,
-    public popoverController: PopoverController
-  ) {
-    this.devices = [];
-  }
-  
+    public modalController: ModalController
+  ) {}
+
   ionViewDidLoad() {
-    Toast.showShortTop("Starting BLE Scan");
-
-    BLE.enable().then(() => {
-      BLE.startScan([]).subscribe(device => this.onDiscoverDevice(device));
+    this.toast.create({
+      message: "Starting BLE Scan",
+      duration: 3000,
     });
+    BLE.enable().then(() => this.discoverDevices());
   }
 
-  onDiscoverDevice(device: IDevice) {
-    Toast.showShortBottom("Device Discovered");
+  discoverDevices() {
+    this.devices = [];
+
+    BLE.startScan([]).subscribe(device => this.onDiscoverDevice(device));
+  }
+
+  onDiscoverDevice(device: Device) {
+    this.toast.create({
+      message: "Device Discovered",
+      duration: 1000,
+    });
     this.devices.push(device);
   }
 
   onError(error: Error) {
-    Toast.showLongTop("Error")
+    this.toast.create({
+      message: "An error occurred",
+      position: 'top',
+      showCloseButton: true,
+    });
     console.error(error);
   }
 
-  connect(event: Event, device: IDevice) {
+  connect(event: Event, device: Device) {
     let connecting = this.loadingController.create({
       content: "Please wait..."
     });
-    
+
+    BLE.stopScan();
+
     connecting.present();
-    
+
     BLE.connect(device.id).subscribe(() => {
-      let popover = this.popoverController.create(BatteryStatePage, {device});
-      
+      let modal = this.modalController.create(BatteryStatePage, {device});
+
+      modal.onDidDismiss(() => this.discoverDevices());
+
       connecting.dismiss();
-      
-      popover.present();
+
+      modal.present();
     });
   }
 }

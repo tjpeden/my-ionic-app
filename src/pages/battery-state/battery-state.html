@@ -1,18 +1,13 @@
-<!--
-  Generated template for the BatteryStatePage page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
   <ion-navbar>
-    <ion-title>BatteryStatePage</ion-title>
+    <ion-title>Battery State</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
-
+  <h1>{{batteryLevel}}</h1>
+  <h2>{{device.id}}</h2>
+  <p>{{device.name}}</p>
+  <button ion-button>Read Battery State</button>
 </ion-content>

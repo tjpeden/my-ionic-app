@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { NavController, NavParams } from 'ionic-angular';
 
-import { BLE } from 'ionic-native';
+import { Toast, BLE } from 'ionic-native';
 
 // import { BatteryStatePage } from '../battery-state/battery-state';
 
@@ -11,32 +11,40 @@ import { BLE } from 'ionic-native';
 })
 export class BLEListPage {
   devices: Array<any>;
-  
+
   constructor(
     public navController: NavController,
     public navParams: NavParams
   ) {
-    BLE.enable().then(
+    this.devices = [];
+
+    Toast.showShortTop("Starting BLE Scan");
+    BLE.isEnabled().then(
       () => {
-        BLE.scan([], 5).subscribe(device => this.onDiscoverDevice(device));
+        this.discoverDevices();
       },
-      error => this.onError(error)
-    )
+      () => {
+        BLE.enable().then(() => this.discoverDevices());
+      }
+    );
   }
-  
-  onDiscoverDevice(device) {
+
+  discoverDevices() {
+    BLE.scan([], 10).subscribe(device => this.onDiscoverDevice(device))
+  }
+
+  onDiscoverDevice(device: any) {
+    Toast.showShortBottom("Device Discovered");
     this.devices.push(device);
   }
-  
-  onError(error) {
+
+  onError(error: Error) {
+    Toast.showLongTop("Error")
     console.error(error);
   }
-  
-  connect(event, device) {
-    console.log(device);
-    // this.navCtrl.push(BatteryStatePage, {
-    //   device,
-      
-    // });
+
+  connect(event: Event, device: any) {
+    console.log(JSON.stringify(device, null, 2));
+    // this.navController.push(BatteryStatePage, {device});
   }
 }

@@ -22,7 +22,11 @@ export class BatteryStatePage {
   readBatterState(event) {
     BLE.read(this.device.id, BatteryLevel.service, BatteryLevel.characteristic).then(
       data => {
+        console.log("Data read");
         this.batteryLevel = new Uint8Array(data)[0];
+      },
+      error => {
+        console.log(error);
       }
     );
   }

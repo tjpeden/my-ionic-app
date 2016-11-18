@@ -57,7 +57,7 @@ export class BLEListPage {
 
   connect(event: Event, device: Device) {
     let connecting = this.loadingController.create({
-      content: "Please wait..."
+      content: "Connecting, please wait..."
     });
 
     BLE.stopScan();

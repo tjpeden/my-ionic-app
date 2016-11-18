@@ -6,8 +6,17 @@
 
 
 <ion-content padding>
-  <h1>{{batteryLevel}}</h1>
-  <h2>{{device.id}}</h2>
-  <p>{{device.name}}</p>
-  <button ion-button>Read Battery State</button>
+  <h1>{{ device.id }}</h1>
+
+  <ion-list>
+    <ion-item *ngFor="let characteristic of device.characteristics">
+      <h2>{{ characteristic.id }} - {{ characteristic.characteristic }}</h2>
+      <ion-item-options side="right">
+        <button ion-button color="primary">
+          <ion-icon name="eye"></ion-icon>
+          Read
+        </button>
+      </ion-item-options>
+    </ion-item>
+  </ion-list>
 </ion-content>

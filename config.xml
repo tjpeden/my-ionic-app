@@ -43,4 +43,6 @@
   <engine name="android" spec="~6.0.0"/>
   <allow-navigation href="http://192.168.0.3:8100"/>
   <allow-navigation href="http://10.20.10.60:8100"/>
+  <allow-navigation href="http://localhost:8100"/>
+  <allow-navigation href="http://192.168.42.28:8100"/>
 </widget>
